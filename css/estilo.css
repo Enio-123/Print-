@@ -12,8 +12,13 @@
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--topo) + 16px)}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--topo) + 16px);-webkit-tap-highlight-color:transparent}
+html.suave{scroll-behavior:auto} /* a rolagem suave do site.js assume */
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* sem barras de rolagem visíveis em nenhum lugar (a página e as caixas continuam rolando) */
+html,*{scrollbar-width:none}
+::-webkit-scrollbar{display:none;width:0;height:0}
+::selection{background:var(--y);color:var(--tinta)}
 body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--texto);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--papel)}
 body.menu-aberto{overflow:hidden}
@@ -117,12 +122,13 @@ h1,h2,h3{font-family:var(--display);font-weight:800;margin:0;letter-spacing:-.02
    linear-gradient(var(--cm),var(--cm)) right 0 bottom 13px/9px 1px no-repeat,
    linear-gradient(var(--cm),var(--cm)) right 13px bottom 0/1px 9px no-repeat}
 .prova-topo,.prova-base{display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;color:var(--sub)}
+.prova-topo span,.prova-base span{white-space:nowrap}
 .prova-logo{display:block;width:100%;height:auto;aspect-ratio:2700/920;overflow:visible;margin:clamp(22px,4vw,44px) 0 clamp(18px,3vw,34px)}
 .prova-logo .placa{mix-blend-mode:multiply}
 .barra{display:flex;height:10px;width:clamp(120px,40%,220px)}
 .barra i{flex:1 1 0}
 .dica{display:none}
-@media (hover:hover) and (pointer:fine){.dica{display:inline}}
+@media (hover:hover) and (pointer:fine) and (min-width:560px){.dica{display:inline}}
 
 /* ===== seções ===== */
 .secao{padding-block:88px}
@@ -194,7 +200,6 @@ h1,h2,h3{font-family:var(--display);font-weight:800;margin:0;letter-spacing:-.02
 .socio{display:grid;gap:12px;background:var(--branco);border:1px solid var(--linha);border-radius:var(--raio);padding:28px;align-content:start}
 .socio .papel-s{font-family:var(--display);font-weight:800;font-size:clamp(30px,3.4vw,42px);letter-spacing:-.03em;line-height:1}
 .socio .nome{font-weight:700}
-.socio .nome.pendente{color:var(--sub);font-weight:600}
 .socio p.desc{color:var(--sub);font-size:15.5px}
 
 /* contato */
@@ -207,7 +212,6 @@ h1,h2,h3{font-family:var(--display);font-weight:800;margin:0;letter-spacing:-.02
 .canais{margin-top:30px;display:grid;gap:0;border-top:1px solid var(--linha-escura);max-width:440px}
 .canal{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--linha-escura);font-size:15px}
 .canal span:first-child{font-family:var(--mono);font-size:13px;color:var(--sub-escuro)}
-.canal .pendente{color:var(--sub-escuro)}
 .canal a{color:var(--papel);font-weight:700;text-decoration:none;overflow-wrap:anywhere}
 .canal a:hover{text-decoration:underline}
 
@@ -216,8 +220,11 @@ h1,h2,h3{font-family:var(--display);font-weight:800;margin:0;letter-spacing:-.02
 .campo label,.campo legend{font-weight:700;font-size:14.5px}
 .campo .opc{font-weight:500;color:var(--sub)}
 input[type=text],select,textarea{width:100%;font:500 16px/1.4 var(--texto);color:var(--tinta);background:var(--branco);border:1.5px solid #CFCDC6;border-radius:4px;padding:12px 14px;min-height:48px}
-textarea{min-height:104px;resize:vertical}
+select{-webkit-appearance:none;appearance:none;padding-right:44px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23111114' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;background-size:12px 12px}
+textarea{min-height:110px;max-height:280px;resize:none;field-sizing:content;overflow-y:auto}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--tinta);box-shadow:0 0 0 3px rgba(0,174,232,.35)}
+input:-webkit-autofill{-webkit-text-fill-color:var(--tinta);-webkit-box-shadow:0 0 0 60px var(--branco) inset}
+input:-webkit-autofill:focus{-webkit-box-shadow:0 0 0 60px var(--branco) inset,0 0 0 3px rgba(0,174,232,.35)}
 .campo[data-erro] input,.campo[data-erro] select{border-color:#C8102E}
 .erro{font-size:13.5px;color:#B00E28;font-weight:600;min-height:0}
 fieldset{border:0;margin:0;padding:0;min-width:0}
@@ -246,20 +253,38 @@ legend{padding:0}
 .col ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .col a{text-decoration:none;font-weight:600;font-size:15px}
 .col a:hover{text-decoration:underline;text-underline-offset:3px}
-.col .pendente{color:var(--sub);font-size:14.5px}
 .base{margin-top:48px;padding-top:20px;border-top:1px solid var(--linha);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center}
 .base .barra{width:180px}
 
-/* ===== animações: a página é impressa em quatro passadas =====
-   Só valem com a classe .anima no <html>, que o script do topo coloca quando o movimento está liberado.
-   Grupos (iguais aos do site.js): varre = textos em cores, caixa = caixas em registro, sobe = textos de apoio,
-   pop = ícones, digita = rótulos digitados, linha = traços, logo = logo do rodapé. */
-.cabeca{display:none}
+/* ===== construção da página: quatro cursores (ciano, magenta, amarelo e preto) =====
+   Só vale com a classe .anima no <html>, que o script do topo coloca quando o movimento está liberado.
+   Grupos (iguais aos do site.js): varre = títulos pintados pelo cursor, caixa = caixas desenhadas com seleção,
+   sobe = textos de apoio, pop = ícones, digita = rótulos digitados, linha = traços riscados,
+   logo = chapas do logo encaixadas, clique = botões do topo. Sem cursor livre, cada grupo usa a animação simples (.impresso). */
+.cursores{position:fixed;inset:0;z-index:55;pointer-events:none;overflow:hidden;contain:strict}
+body.menu-aberto .cursores{visibility:hidden}
+.cur{position:absolute;left:0;top:0;opacity:0;transition:opacity .28s ease;will-change:transform}
+.cur.ve{opacity:1}
+.cur svg{display:block;width:17px;height:23px;margin:-1.5px 0 0 -1.5px;overflow:visible;transform-origin:1.5px 1.5px;transition:transform .12s ease}
+.cur.aperta svg{transform:scale(.84)}
+.cur path{fill:var(--cor);stroke:var(--contorno);stroke-width:1.4;stroke-linejoin:round}
+.cur .nome{position:absolute;left:13px;top:19px;padding:4px 7px;border-radius:4px;background:var(--cor);color:var(--txt);font:600 11px/1 var(--mono);white-space:nowrap}
+.cur-c,.sel-c,.toque-c{--cor:var(--c);--borda:var(--c);--txt:var(--tinta);--contorno:var(--branco)}
+.cur-m,.sel-m,.toque-m{--cor:var(--m);--borda:var(--m);--txt:var(--tinta);--contorno:var(--branco)}
+.cur-y,.sel-y,.toque-y{--cor:var(--y);--borda:#E0B800;--txt:var(--tinta);--contorno:var(--tinta)}
+.cur-k,.sel-k,.toque-k{--cor:var(--tinta);--borda:var(--tinta);--txt:var(--papel);--contorno:var(--branco)}
+.sel{position:absolute;left:0;top:0;width:0;height:0;border:1.5px solid var(--borda);opacity:0;transition:opacity .3s ease;will-change:transform}
+.sel.ve{opacity:1;transition:none}
+.sel i{position:absolute;width:8px;height:8px;background:var(--branco);border:1.5px solid var(--borda)}
+.sel i:nth-child(1){left:-5px;top:-5px}.sel i:nth-child(2){right:-5px;top:-5px}.sel i:nth-child(3){left:-5px;bottom:-5px}.sel i:nth-child(4){right:-5px;bottom:-5px}
+.sel .med{position:absolute;left:50%;top:100%;margin-top:8px;transform:translateX(-50%);padding:3px 6px;border-radius:3px;background:var(--cor);color:var(--txt);font:600 10.5px/1 var(--mono);white-space:nowrap}
+.toque{position:absolute;left:0;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;border:2px solid var(--borda);border-radius:50%;opacity:0}
+.toque.vai{animation:toque .5s ease-out}
+@keyframes toque{from{opacity:1;transform:scale(.25)}to{opacity:0;transform:scale(1.5)}}
+@media (max-width:620px){.cur .nome{font-size:10px;padding:3px 6px}}
+@media print{.cursores{display:none}}
+
 .d-cursor{display:none}
-.anima .cabeca{display:block;position:absolute;left:0;right:0;top:0;height:12px;z-index:3;pointer-events:none;opacity:0}
-.cabeca i{display:block;height:3px}
-.anima .cabeca.roda{animation:cabeca var(--dur-cabeca,1.25s) cubic-bezier(.45,.05,.35,1) forwards}
-@keyframes cabeca{0%{opacity:1;transform:translateY(0)}85%{opacity:1}100%{opacity:0;transform:translateY(var(--curso,600px))}}
 .anima .d-cursor{display:inline-block;width:.55em;height:1.05em;background:currentColor;vertical-align:-.18em;margin-left:1px;animation:pisca 1s steps(1) infinite}
 @keyframes pisca{50%{opacity:0}}
 .anima .heroi .linha-cod:not(.digitando){opacity:0}
@@ -267,32 +292,56 @@ legend{padding:0}
 @keyframes pisca-inv{0%{background:var(--tinta);color:var(--papel)}50%,100%{background:transparent;color:var(--tinta)}}
 .anima .logo-link svg{animation:limpa .8s cubic-bezier(.6,0,.2,1) .1s both}
 @keyframes limpa{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes aparece{from{opacity:0}to{opacity:1}}
 
+/* VARRE: o cursor pinta palavra por palavra (spans .pp criados na hora); a tinta passa por C, M e Y e fica na cor final */
 .anima :is(.heroi h1,.cab h2,.servico h3,.publico h3,.etapa h3,.motivo h3,.socio .papel-s,.contato h2):not(.feito){--final:var(--tinta);background-image:linear-gradient(100deg,var(--final) 0 34%,var(--y) 34% 44%,var(--m) 44% 54%,var(--c) 54% 64%,transparent 64%);background-size:300% 100%;background-position:100% 0;background-repeat:no-repeat;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 .anima :is(.publico.escuro h3,.contato h2):not(.feito){--final:var(--papel)}
 .anima :is(.heroi h1,.cab h2,.servico h3,.publico h3,.etapa h3,.motivo h3,.socio .papel-s,.contato h2).impresso{animation:varrer 1.2s cubic-bezier(.3,.55,.25,1) var(--atraso,0s) forwards}
 @keyframes varrer{from{background-position:100% 0}to{background-position:0 0}}
+.anima :is(.heroi h1,.cab h2,.servico h3,.publico h3,.etapa h3,.motivo h3,.socio .papel-s,.contato h2).pintando{background-image:none}
+.anima .pintando .pp{-webkit-background-clip:text;background-clip:text;background-repeat:no-repeat;-webkit-text-fill-color:transparent}
+.anima .pintando .pp.ok{-webkit-text-fill-color:var(--final)}
+html:not(.anima) .pp{background:none!important;-webkit-text-fill-color:currentColor}
 
-.anima :is(.servico,.publico,.motivo,.socio,.form,.prova):not(.feito){opacity:0}
+/* CAIXA: aparece dentro da seleção que o cursor arrasta; ao soltar, as chapas C, M e Y entram em registro */
+.anima :is(.servico,.publico,.motivo,.socio,.form,.prova):not(.feito):not(.vivo){opacity:0}
 .anima :is(.servico,.publico,.motivo,.socio,.form,.prova).impresso{animation:registro 1s cubic-bezier(.2,.7,.2,1) var(--atraso,0s) both}
 @keyframes registro{0%{opacity:0;transform:translateY(12px);box-shadow:-18px -12px 0 var(--c),18px 12px 0 var(--m),6px 24px 0 var(--y)}35%{opacity:1}100%{opacity:1;transform:none;box-shadow:0 0 0 var(--c),0 0 0 var(--m),0 0 0 var(--y)}}
-.anima .servico:not(.feito)::before{transform:scaleX(0)}
+.anima :is(.servico,.publico,.motivo,.socio,.form,.prova).desenhando{clip-path:inset(0 var(--dr,100%) var(--db,100%) 0 round 6px)}
+.anima :is(.servico,.publico,.motivo,.socio,.form,.prova).registra{animation:registro-c .65s cubic-bezier(.2,.7,.2,1) both}
+@keyframes registro-c{from{box-shadow:-8px -5px 0 var(--c),8px 5px 0 var(--m),3px 10px 0 var(--y)}to{box-shadow:0 0 0 var(--c),0 0 0 var(--m),0 0 0 var(--y)}}
+.anima .servico:not(.feito):not(.vivo)::before{transform:scaleX(0)}
 .anima .servico.impresso::before{animation:risca .6s cubic-bezier(.6,0,.2,1) calc(var(--atraso,0s) + .3s) both}
 
-.anima :is(.heroi .sub,.heroi .ctas,.cab p.sub,.servico p,.servico ul,.servico .acao,.publico p.desc,.publico ul,.publico .acao,.etapa p,.etapa .saida,.motivo p,.socio .nome,.socio p.desc,.contato .sub,.canais,.rodape-marca p,.col,.base):not(.feito){opacity:0;transform:translateY(14px)}
-.anima :is(.heroi .sub,.heroi .ctas,.cab p.sub,.servico p,.servico ul,.servico .acao,.publico p.desc,.publico ul,.publico .acao,.etapa p,.etapa .saida,.motivo p,.socio .nome,.socio p.desc,.contato .sub,.canais,.rodape-marca p,.col,.base).impresso{animation:sobe .75s cubic-bezier(.2,.7,.2,1) var(--atraso,0s) both}
+/* SOBE: textos de apoio, depois do título ou da caixa */
+.anima :is(.heroi .sub,.cab p.sub,.servico p,.servico ul,.servico .acao,.publico p.desc,.publico ul,.publico .acao,.etapa p,.etapa .saida,.motivo p,.socio .nome,.socio p.desc,.contato .sub,.canais,.rodape-marca p,.col,.base):not(.feito){opacity:0;transform:translateY(14px)}
+.anima :is(.heroi .sub,.cab p.sub,.servico p,.servico ul,.servico .acao,.publico p.desc,.publico ul,.publico .acao,.etapa p,.etapa .saida,.motivo p,.socio .nome,.socio p.desc,.contato .sub,.canais,.rodape-marca p,.col,.base).impresso{animation:sobe .7s cubic-bezier(.2,.7,.2,1) var(--atraso,0s) both}
 @keyframes sobe{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
+/* POP: ícones e quadradinhos de cor */
 .anima :is(.servico .ico,.etapa .num i,.motivo .marca-c):not(.feito){opacity:0;transform:scale(.3)}
 .anima :is(.servico .ico,.etapa .num i,.motivo .marca-c).impresso{animation:pop .6s cubic-bezier(.34,1.56,.64,1) var(--atraso,0s) both}
 @keyframes pop{from{opacity:0;transform:scale(.3) rotate(-12deg)}to{opacity:1;transform:none}}
 
+/* DIGITA: rótulos em mono, digitados com cursor de bloco */
 .anima :is(.cab > .rot,.publico > .rot,.socio > .rot,.contato .rot,.etapa .num):not(.feito):not(.digitando){opacity:0}
 .d-r{color:transparent}
 
+/* LINHA: o cursor risca o traço (--risca vai de 0 a 1) */
 .anima :is(.etapas,.contato):not(.feito)::before{transform:scaleX(0)}
 .anima :is(.etapas,.contato).impresso::before{animation:risca 1.1s cubic-bezier(.6,0,.2,1) var(--atraso,0s) both}
+.anima :is(.etapas,.contato).riscando::before{transform:scaleX(var(--risca,0))}
 @keyframes risca{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
-.anima .rodape-marca .logo-cor:not(.feito){opacity:0}
-.anima .rodape-marca .logo-cor.impresso{animation:sobe .6s ease var(--atraso,0s) both}
+/* LOGO: as chapas começam longe e três cursores arrastam até o registro */
+.anima :is(.prova-logo,.rodape-marca .logo-cor):not(.feito){opacity:0}
+.anima :is(.prova-logo,.rodape-marca .logo-cor).impresso{animation:sobe .6s ease var(--atraso,0s) both}
+.anima :is(.prova-logo,.rodape-marca .logo-cor).montando{opacity:1;animation:aparece .25s ease both}
+
+/* CLIQUE: botões do topo, que aparecem com o clique do cursor preto */
+.anima .heroi .ctas:not(.feito){opacity:0}
+.anima .heroi .ctas.impresso{animation:aparece-r .7s ease var(--atraso,0s) both}
+.anima .heroi .ctas.impresso .btn{animation:registro-btn .7s cubic-bezier(.2,.7,.2,1) var(--atraso,0s) both}
+@keyframes aparece-r{0%{opacity:0}30%,100%{opacity:1}}
+@keyframes registro-btn{from{box-shadow:-7px -5px 0 var(--c),7px 5px 0 var(--m),3px 9px 0 var(--y)}to{box-shadow:0 0 0 var(--c),0 0 0 var(--m),0 0 0 var(--y)}}
