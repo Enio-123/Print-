@@ -13,8 +13,7 @@
 
 ## Antes de publicar
 1. Em `js/site.js`, procure `var CONTATO` e preencha o WhatsApp (só números, com 55 e DDD), o e-mail e o Instagram. O que ficar vazio não aparece no site.
-2. Em `index.html`, no segundo cartão de "Quem somos" (Atendimento e projetos), coloque o nome do sócio da gestão logo depois do título: `<p class="nome">Nome</p>`.
-3. Revise os textos de serviços e de "Para quem". São um rascunho.
+2. Revise os textos de serviços e de "Para quem". São um rascunho.
 
 ## Colocar no ar
 - O site está no repositório Enio-123/Print- e é publicado pelo GitHub Pages a partir da branch main: https://enio-123.github.io/Print-/

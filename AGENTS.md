@@ -24,7 +24,7 @@ Site de apresentação da print(), empresa que faz sites institucionais, landing
 ## Conteúdo
 - Não invente dados: nada de clientes, depoimentos, números, prêmios ou preços que os sócios não informaram.
 - Contatos ficam só no objeto `CONTATO`, no começo de `js/site.js` (WhatsApp só números com 55 e DDD; e-mail; Instagram sem @). O que estiver vazio não aparece no site. Sem nenhum contato definido, a lista de canais some e o rodapé mostra só o link "Pedir orçamento", que leva ao formulário.
-- Em "Quem somos", o nome do sócio da gestão ainda não foi informado, então o segundo cartão não tem a linha do nome. Quando o nome for informado, coloque `<p class="nome">Nome</p>` logo depois do `<p class="papel-s">` desse cartão, igual ao primeiro. Não use texto provisório como "nome a definir".
+- Em "Quem somos", os sócios são Enio Josias (produção: design e código) e André Luiz (gestão: atendimento e projetos). O nome fica na linha `<p class="nome">`, logo depois do `<p class="papel-s">` de cada cartão. Não troque nem abrevie os nomes sem pedido dos sócios.
 - Os textos de serviços e de "Para quem" são um rascunho em revisão.
 
 ## Animações (cursores que constroem a página)
