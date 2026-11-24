@@ -12,7 +12,7 @@
 - `marca/`: logos oficiais em SVG.
 
 ## Antes de publicar
-1. Em `js/site.js`, procure `var CONTATO` e preencha o WhatsApp (só números, com 55 e DDD), o e-mail e o Instagram. O que ficar vazio não aparece no site.
+1. O e-mail já está no site: falecomprint1@gmail.com. Em `js/site.js`, em `var CONTATO`, ainda dá para preencher o WhatsApp (só números, com 55 e DDD) e o Instagram. O que ficar vazio não aparece no site.
 2. Revise os textos de serviços e de "Para quem". São um rascunho.
 
 ## Colocar no ar

@@ -4,7 +4,7 @@
   /* ===== contatos da print(): preencha aqui quando estiverem definidos ===== */
   var CONTATO = {
     whatsapp: "",   // só números, com DDI e DDD. Ex.: "5585999998888"
-    email: "",      // ex.: "contato@seudominio.com.br"
+    email: "falecomprint1@gmail.com", // com domínio próprio, troque por ex.: "falecom@seudominio.com.br"
     instagram: ""   // só o usuário, sem @
   };
 
